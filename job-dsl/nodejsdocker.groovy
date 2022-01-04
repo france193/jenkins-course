@@ -1,6 +1,8 @@
-job('NodeJS Docker example') {
+// name that will have jenkins job
+job('NodeJS Docker example - 2') {
     scm {
-        git('git://github.com/wardviaene/docker-demo.git') {  node -> // is hudson.plugins.git.GitSCM
+        // github repo where to take nodejs app to create docker container
+        git('git@github.com:france193/docker-demo.git') {  node ->
             node / gitConfigName('DSL User')
             node / gitConfigEmail('jenkins-dsl@newtech.academy')
         }
@@ -9,13 +11,16 @@ job('NodeJS Docker example') {
         scm('H/5 * * * *')
     }
     wrappers {
-        nodejs('nodejs') // this is the name of the NodeJS installation in 
-                         // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
+        // this is the name of the NodeJS installation in 
+        // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
+        nodejs('nodejs')                        
     }
     steps {
         dockerBuildAndPublish {
+            // will publish a new docker image at this repo name
             repositoryName('france193/docker-nodejs-demo-2')
             tag('${GIT_REVISION,length=9}')
+            // take dockerhub credentials with this name (dockerhub)
             registryCredentials('dockerhub')
             forcePull(false)
             forceTag(false)
