@@ -2,7 +2,7 @@
 job('NodeJS Docker example - 2') {
     scm {
         // github repo where to take nodejs app to create docker container
-        git('git@github.com:france193/docker-demo.git') {  node ->
+        git('https://github.com/france193/docker-demo.git') {  node ->
             node / gitConfigName('DSL User')
             node / gitConfigEmail('jenkins-dsl@newtech.academy')
         }
